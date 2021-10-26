@@ -1,0 +1,494 @@
+%YAML 1.2
+---
+name: Liquid
+file_extensions:
+  - liquid
+scope: source.liquid
+version: 2
+contexts:
+  main:
+    - match: ""
+      push: Packages/HTML/HTML.sublime-syntax
+      with_prototype:
+        - match: "{%\\s*comment\\s*%}"
+          scope: punctuation.definition.comment
+          push:
+            - meta_scope: comment.block.liquid
+            - match: "{%\\s*endcomment\\s*%}"
+              scope: punctuation.definition.comment
+              pop: true
+        - match: (?={{[-]?\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:\|\s*(?:join|first|last|concat|index|map|reverse|size|sort|where|uniq|color_to_rgb|color_to_hsl|color_to_hex|color_extract|color_brightness|color_modify|color_lighten|color_darken|color_saturate|color_desaturate|color_mix|color_contrast|color_difference|brightness_difference|font_modify|font_face|font_url|img_tag|payment_button|payment_terms|payment_type_svg_tag|preload_tag|script_tag|stylesheet_tag|time_tag|abs|at_most|at_least|ceil|divided_by|floor|minus|plus|round|times|modulo|external_video_tag|external_video_url|img_tag|img_url|media_tag|model_viewer_tag|video_tag|metafield_tag|metafield_text|money|money_with_currency|money_without_trailing_zeros|money_without_currency|append|camelcase|capitalize|downcase|escape|handleize|md5|sha1|sha256|hmac_sha1|hmac_sha256|newline_to_br|pluralize|prepend|remove|remove_first|replace|replace_first|slice|split|strip|lstrip|rstrip|strip_html|strip_newlines|truncate|truncatewords|upcase|url_encode|url_escape|url_param_escape|asset_url|asset_img_url|file_url|file_img_url|customer_login_link|global_asset_url|img_url|link_to|link_to_vendor|link_to_type|link_to_tag|link_to_add_tag|link_to_remove_tag|payment_type_img_url|shopify_asset_url|sort_by|url_for_type|url_for_vendor|date|default|default_errors|default_pagination|format_address|highlight|highlight_active_tag|json|t|weight_with_unit|placeholder_svg_tag)(?=(?:\s|:))(?::\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)?\s*)*\s*[-]?}})
+          push: interpolation
+        - match: "{{.*?}}"
+          scope: invalid.liquid
+        - match: "{%[-]?\\s*(liquid)"
+          captures:
+            "0": keyword.control
+          push: tag
+        - match: "{%\\s*(raw)\\s*%}"
+          captures:
+            "1": keyword.control
+          push:
+            - clear_scopes: true
+            - match: "{%\\s*(endraw)\\s*%}"
+              captures:
+                "1": keyword.control
+              pop: true
+        - match: "{%\\s*(style)\\s*%}"
+          captures:
+            "1": keyword.control
+          push: Packages/CSS/CSS.sublime-syntax
+          with_prototype:
+            - match: (?={{[-]?\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:\|\s*(?:join|first|last|concat|index|map|reverse|size|sort|where|uniq|color_to_rgb|color_to_hsl|color_to_hex|color_extract|color_brightness|color_modify|color_lighten|color_darken|color_saturate|color_desaturate|color_mix|color_contrast|color_difference|brightness_difference|font_modify|font_face|font_url|img_tag|payment_button|payment_terms|payment_type_svg_tag|preload_tag|script_tag|stylesheet_tag|time_tag|abs|at_most|at_least|ceil|divided_by|floor|minus|plus|round|times|modulo|external_video_tag|external_video_url|img_tag|img_url|media_tag|model_viewer_tag|video_tag|metafield_tag|metafield_text|money|money_with_currency|money_without_trailing_zeros|money_without_currency|append|camelcase|capitalize|downcase|escape|handleize|md5|sha1|sha256|hmac_sha1|hmac_sha256|newline_to_br|pluralize|prepend|remove|remove_first|replace|replace_first|slice|split|strip|lstrip|rstrip|strip_html|strip_newlines|truncate|truncatewords|upcase|url_encode|url_escape|url_param_escape|asset_url|asset_img_url|file_url|file_img_url|customer_login_link|global_asset_url|img_url|link_to|link_to_vendor|link_to_type|link_to_tag|link_to_add_tag|link_to_remove_tag|payment_type_img_url|shopify_asset_url|sort_by|url_for_type|url_for_vendor|date|default|default_errors|default_pagination|format_address|highlight|highlight_active_tag|json|t|weight_with_unit|placeholder_svg_tag)(?=(?:\s|:))(?::\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)?\s*)*\s*[-]?}})
+              push: interpolation
+            - match: "{{.*?}}"
+              scope: invalid.liquid
+            - match: (?={%[-]?\s*(?:if\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*|elsif\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*|else|endif|unless\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*|endunless|case\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|when\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|endcase|for\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*in\s*(?:[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??|\(\d+\.\.(?:\d+|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\))\s*(?:(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*|endfor|break|continue|cycle\s*(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")(?:,\s*(?:'.*?(?<!\\)'|".*?(?<!\\)"))*|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:'.*?(?<!\\)'|".*?(?<!\\)")(?:,\s*(?:'.*?(?<!\\)'|".*?(?<!\\)"))*)|tablerow\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*in\s*(?:[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??|\(\d+\.\.(?:\d+|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\))\s*(?:(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*|form\s*(?:(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*|endform|layout\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|paginate\s*[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??\s*by\s*\d+|endpaginate|render\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))\s*(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*|section\s*(?:'.*?(?<!\\)'|".*?(?<!\\)")|assign\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*=\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:\s*\|\s*(?:join|first|last|concat|index|map|reverse|size|sort|where|uniq|color_to_rgb|color_to_hsl|color_to_hex|color_extract|color_brightness|color_modify|color_lighten|color_darken|color_saturate|color_desaturate|color_mix|color_contrast|color_difference|brightness_difference|font_modify|font_face|font_url|img_tag|payment_button|payment_terms|payment_type_svg_tag|preload_tag|script_tag|stylesheet_tag|time_tag|abs|at_most|at_least|ceil|divided_by|floor|minus|plus|round|times|modulo|external_video_tag|external_video_url|img_tag|img_url|media_tag|model_viewer_tag|video_tag|metafield_tag|metafield_text|money|money_with_currency|money_without_trailing_zeros|money_without_currency|append|camelcase|capitalize|downcase|escape|handleize|md5|sha1|sha256|hmac_sha1|hmac_sha256|newline_to_br|pluralize|prepend|remove|remove_first|replace|replace_first|slice|split|strip|lstrip|rstrip|strip_html|strip_newlines|truncate|truncatewords|upcase|url_encode|url_escape|url_param_escape|asset_url|asset_img_url|file_url|file_img_url|customer_login_link|global_asset_url|img_url|link_to|link_to_vendor|link_to_type|link_to_tag|link_to_add_tag|link_to_remove_tag|payment_type_img_url|shopify_asset_url|sort_by|url_for_type|url_for_vendor|date|default|default_errors|default_pagination|format_address|highlight|highlight_active_tag|json|t|weight_with_unit|placeholder_svg_tag)(?=(?:\s|:))(?::\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)?)*|capture\s*[a-zA-Z]+[a-zA-Z0-9_-]*|endcapture|increment\s*[a-zA-Z]+[a-zA-Z0-9_-]*|decrement\s*[a-zA-Z]+[a-zA-Z0-9_-]*)\s*[-]?%})
+              push: tag
+            - match: "{%\\s*(endstyle)\\s*%}"
+              captures:
+                "1": keyword.control
+              pop: true
+        - match: "{%\\s*(schema)\\s*%}"
+          captures:
+            "1": keyword.control
+          push: Packages/JSON/JSON.sublime-syntax
+          with_prototype:
+            - match: "{%\\s*(endschema)\\s*%}"
+              captures:
+                "1": keyword.control
+              pop: true
+        - match: (?={%[-]?\s*(?:if\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*|elsif\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*|else|endif|unless\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*|endunless|case\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|when\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|endcase|for\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*in\s*(?:[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??|\(\d+\.\.(?:\d+|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\))\s*(?:(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*|endfor|break|continue|cycle\s*(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")(?:,\s*(?:'.*?(?<!\\)'|".*?(?<!\\)"))*|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:'.*?(?<!\\)'|".*?(?<!\\)")(?:,\s*(?:'.*?(?<!\\)'|".*?(?<!\\)"))*)|tablerow\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*in\s*(?:[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??|\(\d+\.\.(?:\d+|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\))\s*(?:(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*|form\s*(?:(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*|endform|layout\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|paginate\s*[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??\s*by\s*\d+|endpaginate|render\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))\s*(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*|section\s*(?:'.*?(?<!\\)'|".*?(?<!\\)")|assign\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*=\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:\s*\|\s*(?:join|first|last|concat|index|map|reverse|size|sort|where|uniq|color_to_rgb|color_to_hsl|color_to_hex|color_extract|color_brightness|color_modify|color_lighten|color_darken|color_saturate|color_desaturate|color_mix|color_contrast|color_difference|brightness_difference|font_modify|font_face|font_url|img_tag|payment_button|payment_terms|payment_type_svg_tag|preload_tag|script_tag|stylesheet_tag|time_tag|abs|at_most|at_least|ceil|divided_by|floor|minus|plus|round|times|modulo|external_video_tag|external_video_url|img_tag|img_url|media_tag|model_viewer_tag|video_tag|metafield_tag|metafield_text|money|money_with_currency|money_without_trailing_zeros|money_without_currency|append|camelcase|capitalize|downcase|escape|handleize|md5|sha1|sha256|hmac_sha1|hmac_sha256|newline_to_br|pluralize|prepend|remove|remove_first|replace|replace_first|slice|split|strip|lstrip|rstrip|strip_html|strip_newlines|truncate|truncatewords|upcase|url_encode|url_escape|url_param_escape|asset_url|asset_img_url|file_url|file_img_url|customer_login_link|global_asset_url|img_url|link_to|link_to_vendor|link_to_type|link_to_tag|link_to_add_tag|link_to_remove_tag|payment_type_img_url|shopify_asset_url|sort_by|url_for_type|url_for_vendor|date|default|default_errors|default_pagination|format_address|highlight|highlight_active_tag|json|t|weight_with_unit|placeholder_svg_tag)(?=(?:\s|:))(?::\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)?)*|capture\s*[a-zA-Z]+[a-zA-Z0-9_-]*|endcapture|increment\s*[a-zA-Z]+[a-zA-Z0-9_-]*|decrement\s*[a-zA-Z]+[a-zA-Z0-9_-]*)\s*[-]?%})
+          push: tag
+  numeric:
+    - meta_scope: constant.numeric
+    - match: \d+(?:(\.)\d+)+
+      captures:
+        "1": punctuation.separator.liquid
+    - match: ""
+      pop: true
+  string:
+    - meta_scope: meta.string
+    - match: (').*?(?<!\\)(')
+      scope: string.quoted.single.liquid
+      captures:
+        "1": punctuation.definition.string.begin.liquid
+        "2": punctuation.definition.string.end.liquid
+    - match: (").*?(?<!\\)(")
+      scope: string.quoted.double.liquid
+      captures:
+        "1": punctuation.definition.string.begin.liquid
+        "2": punctuation.definition.string.end.liquid
+    - match: ""
+      pop: true
+  dotAccessor:
+    - match: (\.)[a-zA-Z]+[a-zA-Z0-9_-]*
+      captures:
+        "1": punctuation.accessor.liquid
+    - match: ""
+      pop: true
+  bracketAccessor:
+    - match: \[
+    - match: \]
+    - match: (?=(?:'.*?(?<!\\)'|".*?(?<!\\)"))
+      push: string
+    - match: \d+
+    - match: "[a-zA-Z]+[a-zA-Z0-9_-]*"
+    - match: ""
+      pop: true
+  variable:
+    - meta_scope: variable.other.liquid
+    - match: "[a-zA-Z]+[a-zA-Z0-9_-]*"
+    - match: (?=\.[a-zA-Z]+[a-zA-Z0-9_-]*)
+      push: dotAccessor
+    - match: (?=\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\])
+      push: bracketAccessor
+    - match: \?
+    - match: ""
+      pop: true
+  value:
+    - match: (?=\d+(?:\.\d+)?)
+      push: numeric
+    - match: (?=(?:'.*?(?<!\\)'|".*?(?<!\\)"))
+      push: string
+    - match: (?=[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)
+      push: variable
+    - match: ""
+      pop: true
+  arg:
+    - match: (?=[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))
+      push:
+        - match: "[a-zA-Z]+[a-zA-Z0-9_-]*(:)\\s*"
+          captures:
+            "1": punctuation.separator.liquid
+        - match: (?=(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))
+          push: value
+        - match: ""
+          pop: true
+    - match: (?=(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))
+      push: value
+    - match: ""
+      pop: true
+  filter:
+    - match: \|
+      scope: punctuation.separator.liquid
+    - match: (?=(?:join|first|last|concat|index|map|reverse|size|sort|where|uniq|color_to_rgb|color_to_hsl|color_to_hex|color_extract|color_brightness|color_modify|color_lighten|color_darken|color_saturate|color_desaturate|color_mix|color_contrast|color_difference|brightness_difference|font_modify|font_face|font_url|img_tag|payment_button|payment_terms|payment_type_svg_tag|preload_tag|script_tag|stylesheet_tag|time_tag|abs|at_most|at_least|ceil|divided_by|floor|minus|plus|round|times|modulo|external_video_tag|external_video_url|img_tag|img_url|media_tag|model_viewer_tag|video_tag|metafield_tag|metafield_text|money|money_with_currency|money_without_trailing_zeros|money_without_currency|append|camelcase|capitalize|downcase|escape|handleize|md5|sha1|sha256|hmac_sha1|hmac_sha256|newline_to_br|pluralize|prepend|remove|remove_first|replace|replace_first|slice|split|strip|lstrip|rstrip|strip_html|strip_newlines|truncate|truncatewords|upcase|url_encode|url_escape|url_param_escape|asset_url|asset_img_url|file_url|file_img_url|customer_login_link|global_asset_url|img_url|link_to|link_to_vendor|link_to_type|link_to_tag|link_to_add_tag|link_to_remove_tag|payment_type_img_url|shopify_asset_url|sort_by|url_for_type|url_for_vendor|date|default|default_errors|default_pagination|format_address|highlight|highlight_active_tag|json|t|weight_with_unit|placeholder_svg_tag)(?=(?:\s|:))(?::\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)?)
+      push:
+        - meta_scope: meta.function-call.liquid
+        - match: (?:join|first|last|concat|index|map|reverse|size|sort|where|uniq|color_to_rgb|color_to_hsl|color_to_hex|color_extract|color_brightness|color_modify|color_lighten|color_darken|color_saturate|color_desaturate|color_mix|color_contrast|color_difference|brightness_difference|font_modify|font_face|font_url|img_tag|payment_button|payment_terms|payment_type_svg_tag|preload_tag|script_tag|stylesheet_tag|time_tag|abs|at_most|at_least|ceil|divided_by|floor|minus|plus|round|times|modulo|external_video_tag|external_video_url|img_tag|img_url|media_tag|model_viewer_tag|video_tag|metafield_tag|metafield_text|money|money_with_currency|money_without_trailing_zeros|money_without_currency|append|camelcase|capitalize|downcase|escape|handleize|md5|sha1|sha256|hmac_sha1|hmac_sha256|newline_to_br|pluralize|prepend|remove|remove_first|replace|replace_first|slice|split|strip|lstrip|rstrip|strip_html|strip_newlines|truncate|truncatewords|upcase|url_encode|url_escape|url_param_escape|asset_url|asset_img_url|file_url|file_img_url|customer_login_link|global_asset_url|img_url|link_to|link_to_vendor|link_to_type|link_to_tag|link_to_add_tag|link_to_remove_tag|payment_type_img_url|shopify_asset_url|sort_by|url_for_type|url_for_vendor|date|default|default_errors|default_pagination|format_address|highlight|highlight_active_tag|json|t|weight_with_unit|placeholder_svg_tag)(?=(?:\s|:))
+          scope: variable.function.liquid
+        - match: (?=:\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)
+          push:
+            - match: ":"
+              scope: punctuation.separator.liquid
+            - match: ","
+              scope: punctuation.separator.liquid
+            - match: (?=(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))
+              push: arg
+            - match: \s*
+            - match: ""
+              pop: true
+        - match: \s*
+        - match: ""
+          pop: true
+    - match: \s*
+    - match: ""
+      pop: true
+  embedded:
+    - meta_scope: source.liquid.embedded
+    - match: (?=(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))
+      push: value
+    - match: (?=\|\s*(?:join|first|last|concat|index|map|reverse|size|sort|where|uniq|color_to_rgb|color_to_hsl|color_to_hex|color_extract|color_brightness|color_modify|color_lighten|color_darken|color_saturate|color_desaturate|color_mix|color_contrast|color_difference|brightness_difference|font_modify|font_face|font_url|img_tag|payment_button|payment_terms|payment_type_svg_tag|preload_tag|script_tag|stylesheet_tag|time_tag|abs|at_most|at_least|ceil|divided_by|floor|minus|plus|round|times|modulo|external_video_tag|external_video_url|img_tag|img_url|media_tag|model_viewer_tag|video_tag|metafield_tag|metafield_text|money|money_with_currency|money_without_trailing_zeros|money_without_currency|append|camelcase|capitalize|downcase|escape|handleize|md5|sha1|sha256|hmac_sha1|hmac_sha256|newline_to_br|pluralize|prepend|remove|remove_first|replace|replace_first|slice|split|strip|lstrip|rstrip|strip_html|strip_newlines|truncate|truncatewords|upcase|url_encode|url_escape|url_param_escape|asset_url|asset_img_url|file_url|file_img_url|customer_login_link|global_asset_url|img_url|link_to|link_to_vendor|link_to_type|link_to_tag|link_to_add_tag|link_to_remove_tag|payment_type_img_url|shopify_asset_url|sort_by|url_for_type|url_for_vendor|date|default|default_errors|default_pagination|format_address|highlight|highlight_active_tag|json|t|weight_with_unit|placeholder_svg_tag)(?=(?:\s|:))(?::\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)?)
+      push: filter
+    - match: \s*
+    - match: ""
+      pop: true
+  interpolation:
+    - clear_scopes: true
+    - meta_scope: meta.interpolation.liquid
+    - match: "{{[-]?"
+      scope: punctuation.section.interpolation.begin.liquid
+    - match: (?=\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*)
+      push: embedded
+    - match: "[-]?}}"
+      scope: punctuation.section.interpolation.end.liquid
+      pop: true
+  condition:
+    - match: (?=(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))
+      push: value
+    - match: (?:==|!=|>=|<=|<|>|contains)
+      scope: keyword.operator
+    - match: \s*
+    - match: ""
+      pop: true
+  conditions:
+    - match: (?=(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)
+      push: condition
+    - match: (?:and|or)
+      scope: keyword.operator.word.liquid
+    - match: \s*
+    - match: ""
+      pop: true
+  if_statement:
+    - match: if
+      scope: keyword.control
+    - match: (?=(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*)
+      push: conditions
+    - match: \s*
+    - match: ""
+      pop: true
+  elsif_statement:
+    - match: elsif
+      scope: keyword.control
+    - match: (?=(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*)
+      push: conditions
+    - match: \s*
+    - match: ""
+      pop: true
+  else_statement:
+    - match: else
+      scope: keyword.control
+    - match: ""
+      pop: true
+  endif_statement:
+    - match: endif
+      scope: keyword.control
+    - match: ""
+      pop: true
+  unless_statement:
+    - match: unless
+      scope: keyword.control
+    - match: (?=(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*)
+      push: conditions
+    - match: \s*
+    - match: ""
+      pop: true
+  endunless_statement:
+    - match: endunless
+      scope: keyword.control
+    - match: ""
+      pop: true
+  case_statement:
+    - match: case
+      scope: keyword.control
+    - match: (?=(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))
+      push: value
+    - match: \s*
+    - match: ""
+      pop: true
+  when_statement:
+    - match: when
+      scope: keyword.control
+    - match: (?=(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))
+      push: value
+    - match: \s*
+    - match: ""
+      pop: true
+  endcase_statement:
+    - match: endcase
+      scope: keyword.control
+    - match: ""
+      pop: true
+  range:
+    - match: \(
+    - match: \)
+    - match: \d+
+    - match: (?=[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)
+      push: variable
+    - match: \.
+      scope: punctuation.separator.liquid
+    - match: ""
+      pop: true
+  for_statement:
+    - match: for
+      scope: keyword.control
+    - match: "[a-zA-Z]+[a-zA-Z0-9_-]*"
+      scope: variable.other.liquid
+    - match: in
+      scope: keyword.operator.word.liquid
+    - match: (?=(?:[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??|\(\d+\.\.(?:\d+|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\)))
+      push:
+        - match: (?=[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)
+          push: variable
+        - match: (?=\(\d+\.\.(?:\d+|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\))
+          push: range
+        - match: ""
+          pop: true
+    - match: (?=(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))
+      push: arg
+    - match: \s*
+    - match: ""
+      pop: true
+  tablerow_statement:
+    - match: tablerow
+      scope: keyword.control
+    - match: "[a-zA-Z]+[a-zA-Z0-9_-]*"
+      scope: variable.other.liquid
+    - match: in
+      scope: keyword.operator.word.liquid
+    - match: (?=(?:[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??|\(\d+\.\.(?:\d+|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\)))
+      push:
+        - match: (?=[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)
+          push: variable
+        - match: (?=\(\d+\.\.(?:\d+|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\))
+          push: range
+        - match: ""
+          pop: true
+    - match: (?=(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))
+      push: arg
+    - match: \s*
+    - match: ""
+      pop: true
+  endfor_statement:
+    - match: endfor
+      scope: keyword.control
+    - match: ""
+      pop: true
+  break_statement:
+    - match: break
+      scope: keyword.control
+    - match: ""
+      pop: true
+  continue_statement:
+    - match: continue
+      scope: keyword.control
+    - match: ""
+      pop: true
+  cycle_statement:
+    - match: cycle
+      scope: keyword.control
+    - match: (?=(?:'.*?(?<!\\)'|".*?(?<!\\)")(?:,\s*(?:'.*?(?<!\\)'|".*?(?<!\\)"))*)
+      push:
+        - match: ","
+          scope: punctuation.separator
+        - match: (?=(?:'.*?(?<!\\)'|".*?(?<!\\)"))
+          push: string
+        - match: \s*
+        - match: ""
+          pop: true
+    - match: (?=[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:'.*?(?<!\\)'|".*?(?<!\\)")(?:,\s*(?:'.*?(?<!\\)'|".*?(?<!\\)"))*)
+      push:
+        - match: "[a-zA-Z]+[a-zA-Z0-9_-]*"
+        - match: ":"
+          scope: punctuation.separator
+        - match: ","
+          scope: punctuation.separator
+        - match: (?=(?:'.*?(?<!\\)'|".*?(?<!\\)"))
+          push: string
+        - match: \s*
+        - match: ""
+          pop: true
+    - match: \s*
+    - match: ""
+      pop: true
+  form_statement:
+    - match: form
+      scope: keyword.control
+    - match: (?=(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))
+      push: arg
+    - match: \s*
+    - match: ""
+      pop: true
+  endform_statement:
+    - match: endform
+      scope: keyword.control
+    - match: ""
+      pop: true
+  layout_statement:
+    - match: layout
+      scope: keyword.control
+    - match: (?=(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))
+      push: value
+    - match: \s*
+    - match: ""
+      pop: true
+  paginate_statement:
+    - match: paginate
+      scope: keyword.control
+    - match: by
+      scope: keyword.control
+    - match: (?=\d+(?:\.\d+)?)
+      push: numeric
+    - match: (?=[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)
+      push: variable
+    - match: \s*
+    - match: ""
+      pop: true
+  render_statement:
+    - match: render
+      scope: keyword.control
+    - match: ","
+      scope: punctuation.separator
+    - match: (?=(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))
+      push: arg
+    - match: \s*
+    - match: ""
+      pop: true
+  section_statement:
+    - match: section
+      scope: keyword.control
+    - match: (?=(?:'.*?(?<!\\)'|".*?(?<!\\)"))
+      push: string
+    - match: \s*
+    - match: ""
+      pop: true
+  assign_statement:
+    - match: (assign)\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*(=)
+      captures:
+        "1": keyword.control.liquid
+        "2": keyword.operator.liquid
+    - match: (?=(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))
+      push: value
+    - match: (?=\|\s*(?:join|first|last|concat|index|map|reverse|size|sort|where|uniq|color_to_rgb|color_to_hsl|color_to_hex|color_extract|color_brightness|color_modify|color_lighten|color_darken|color_saturate|color_desaturate|color_mix|color_contrast|color_difference|brightness_difference|font_modify|font_face|font_url|img_tag|payment_button|payment_terms|payment_type_svg_tag|preload_tag|script_tag|stylesheet_tag|time_tag|abs|at_most|at_least|ceil|divided_by|floor|minus|plus|round|times|modulo|external_video_tag|external_video_url|img_tag|img_url|media_tag|model_viewer_tag|video_tag|metafield_tag|metafield_text|money|money_with_currency|money_without_trailing_zeros|money_without_currency|append|camelcase|capitalize|downcase|escape|handleize|md5|sha1|sha256|hmac_sha1|hmac_sha256|newline_to_br|pluralize|prepend|remove|remove_first|replace|replace_first|slice|split|strip|lstrip|rstrip|strip_html|strip_newlines|truncate|truncatewords|upcase|url_encode|url_escape|url_param_escape|asset_url|asset_img_url|file_url|file_img_url|customer_login_link|global_asset_url|img_url|link_to|link_to_vendor|link_to_type|link_to_tag|link_to_add_tag|link_to_remove_tag|payment_type_img_url|shopify_asset_url|sort_by|url_for_type|url_for_vendor|date|default|default_errors|default_pagination|format_address|highlight|highlight_active_tag|json|t|weight_with_unit|placeholder_svg_tag)(?=(?:\s|:))(?::\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)?)
+      push: filter
+    - match: \s*
+    - match: ""
+      pop: true
+  capture_statement:
+    - match: (capture)\s*[a-zA-Z]+[a-zA-Z0-9_-]*
+      captures:
+        "1": keyword.control.liquid
+    - match: ""
+      pop: true
+  endcapture_statement:
+    - match: endcapture
+      scope: keyword.control
+    - match: ""
+      pop: true
+  increment_statement:
+    - match: (increment)\s*[a-zA-Z]+[a-zA-Z0-9_-]*
+      captures:
+        "1": keyword.control.liquid
+    - match: ""
+      pop: true
+  decrement_statement:
+    - match: (decrement)\s*[a-zA-Z]+[a-zA-Z0-9_-]*
+      captures:
+        "1": keyword.control.liquid
+    - match: ""
+      pop: true
+  statements:
+    - match: (?=if\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*)
+      push: if_statement
+    - match: (?=else)
+      push: else_statement
+    - match: (?=elsif\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*)
+      push: elsif_statement
+    - match: (?=endif)
+      push: endif_statement
+    - match: (?=unless\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*)
+      push: unless_statement
+    - match: (?=endunless)
+      push: endunless_statement
+    - match: (?=case\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))
+      push: case_statement
+    - match: (?=when\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))
+      push: when_statement
+    - match: (?=endcase)
+      push: endcase_statement
+    - match: (?=for\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*in\s*(?:[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??|\(\d+\.\.(?:\d+|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\))\s*(?:(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)
+      push: for_statement
+    - match: (?=endform)
+      push: endform_statement
+    - match: (?=endfor)
+      push: endfor_statement
+    - match: (?=break)
+      push: break_statement
+    - match: (?=continue)
+      push: continue_statement
+    - match: (?=cycle\s*(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")(?:,\s*(?:'.*?(?<!\\)'|".*?(?<!\\)"))*|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:'.*?(?<!\\)'|".*?(?<!\\)")(?:,\s*(?:'.*?(?<!\\)'|".*?(?<!\\)"))*))
+      push: cycle_statement
+    - match: (?=tablerow\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*in\s*(?:[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??|\(\d+\.\.(?:\d+|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\))\s*(?:(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)
+      push: tablerow_statement
+    - match: (?=form\s*(?:(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)
+      push: form_statement
+    - match: (?=layout\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))
+      push: layout_statement
+    - match: (?=paginate\s*[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??\s*by\s*\d+)
+      push: paginate_statement
+    - match: endpaginate
+      scope: keyword.control
+    - match: (?=render\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))\s*(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)
+      push: render_statement
+    - match: (?=section\s*(?:'.*?(?<!\\)'|".*?(?<!\\)"))
+      push: section_statement
+    - match: (?=assign\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*=\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:\s*\|\s*(?:join|first|last|concat|index|map|reverse|size|sort|where|uniq|color_to_rgb|color_to_hsl|color_to_hex|color_extract|color_brightness|color_modify|color_lighten|color_darken|color_saturate|color_desaturate|color_mix|color_contrast|color_difference|brightness_difference|font_modify|font_face|font_url|img_tag|payment_button|payment_terms|payment_type_svg_tag|preload_tag|script_tag|stylesheet_tag|time_tag|abs|at_most|at_least|ceil|divided_by|floor|minus|plus|round|times|modulo|external_video_tag|external_video_url|img_tag|img_url|media_tag|model_viewer_tag|video_tag|metafield_tag|metafield_text|money|money_with_currency|money_without_trailing_zeros|money_without_currency|append|camelcase|capitalize|downcase|escape|handleize|md5|sha1|sha256|hmac_sha1|hmac_sha256|newline_to_br|pluralize|prepend|remove|remove_first|replace|replace_first|slice|split|strip|lstrip|rstrip|strip_html|strip_newlines|truncate|truncatewords|upcase|url_encode|url_escape|url_param_escape|asset_url|asset_img_url|file_url|file_img_url|customer_login_link|global_asset_url|img_url|link_to|link_to_vendor|link_to_type|link_to_tag|link_to_add_tag|link_to_remove_tag|payment_type_img_url|shopify_asset_url|sort_by|url_for_type|url_for_vendor|date|default|default_errors|default_pagination|format_address|highlight|highlight_active_tag|json|t|weight_with_unit|placeholder_svg_tag)(?=(?:\s|:))(?::\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)?)*)
+      push: assign_statement
+    - match: (?=capture\s*[a-zA-Z]+[a-zA-Z0-9_-]*)
+      push: capture_statement
+    - match: (?=endcapture)
+      push: endcapture_statement
+    - match: (?=increment\s*[a-zA-Z]+[a-zA-Z0-9_-]*)
+      push: increment_statement
+    - match: (?=decrement\s*[a-zA-Z]+[a-zA-Z0-9_-]*)
+      push: decrement_statement
+    - match: ""
+      pop: true
+  tag:
+    - clear_scopes: true
+    - match: "{%[-]?"
+    - match: \s*
+    - match: (?=(?:if\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*|elsif\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*|else|endif|unless\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?\s*(?:\s*(?:and|or)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:(?:==|!=|>=|<=|<|>|contains)\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))?)*|endunless|case\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|when\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|endcase|for\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*in\s*(?:[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??|\(\d+\.\.(?:\d+|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\))\s*(?:(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*|endfor|break|continue|cycle\s*(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")(?:,\s*(?:'.*?(?<!\\)'|".*?(?<!\\)"))*|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:'.*?(?<!\\)'|".*?(?<!\\)")(?:,\s*(?:'.*?(?<!\\)'|".*?(?<!\\)"))*)|tablerow\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*in\s*(?:[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??|\(\d+\.\.(?:\d+|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\))\s*(?:(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*|form\s*(?:(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*|endform|layout\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|paginate\s*[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??\s*by\s*\d+|endpaginate|render\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))\s*(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*|section\s*(?:'.*?(?<!\\)'|".*?(?<!\\)")|assign\s*[a-zA-Z]+[a-zA-Z0-9_-]*\s*=\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)\s*(?:\s*\|\s*(?:join|first|last|concat|index|map|reverse|size|sort|where|uniq|color_to_rgb|color_to_hsl|color_to_hex|color_extract|color_brightness|color_modify|color_lighten|color_darken|color_saturate|color_desaturate|color_mix|color_contrast|color_difference|brightness_difference|font_modify|font_face|font_url|img_tag|payment_button|payment_terms|payment_type_svg_tag|preload_tag|script_tag|stylesheet_tag|time_tag|abs|at_most|at_least|ceil|divided_by|floor|minus|plus|round|times|modulo|external_video_tag|external_video_url|img_tag|img_url|media_tag|model_viewer_tag|video_tag|metafield_tag|metafield_text|money|money_with_currency|money_without_trailing_zeros|money_without_currency|append|camelcase|capitalize|downcase|escape|handleize|md5|sha1|sha256|hmac_sha1|hmac_sha256|newline_to_br|pluralize|prepend|remove|remove_first|replace|replace_first|slice|split|strip|lstrip|rstrip|strip_html|strip_newlines|truncate|truncatewords|upcase|url_encode|url_escape|url_param_escape|asset_url|asset_img_url|file_url|file_img_url|customer_login_link|global_asset_url|img_url|link_to|link_to_vendor|link_to_type|link_to_tag|link_to_add_tag|link_to_remove_tag|payment_type_img_url|shopify_asset_url|sort_by|url_for_type|url_for_vendor|date|default|default_errors|default_pagination|format_address|highlight|highlight_active_tag|json|t|weight_with_unit|placeholder_svg_tag)(?=(?:\s|:))(?::\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??))(?:,\s*(?:(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)|[a-zA-Z]+[a-zA-Z0-9_-]*:\s*(?:\d+(?:\.\d+)?|(?:'.*?(?<!\\)'|".*?(?<!\\)")|[a-zA-Z]+[a-zA-Z0-9_-]*(?:(?:\.[a-zA-Z]+[a-zA-Z0-9_-]*|\[(?:(?:'.*?(?<!\\)'|".*?(?<!\\)")|\d+|[a-zA-Z]+[a-zA-Z0-9_-]*)\]))*\??)))*)?)*|capture\s*[a-zA-Z]+[a-zA-Z0-9_-]*|endcapture|increment\s*[a-zA-Z]+[a-zA-Z0-9_-]*|decrement\s*[a-zA-Z]+[a-zA-Z0-9_-]*))
+      push: statements
+    - match: "[-]?%}"
+      pop: true
